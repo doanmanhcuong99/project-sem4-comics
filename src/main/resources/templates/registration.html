@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Sign Up Form</title>
+	<!-- Font Icon -->
+	<link rel="stylesheet" href="/loginCss/fonts/material-icon/css/material-design-iconic-font.min.css">
+	<!-- Main css -->
+	<link rel="stylesheet" href="/loginCss/css/style.css">
+</head>
+<body>
+
+<div class="main">
+	<div class="container">
+		<div class="signup-content">
+			<!--Show this info message only if registered successfully-->
+			<div class="alert alert-info" th:if="${successMessage}" th:utext="${successMessage}"></div>
+			<form autocomplete="off" action="#" th:action="@{/sign-up}" th:object="${account}" method="post" role="form" id="signup-form" class="signup-form">
+				<h2>Sign up </h2>
+				<div class="form-group">
+					<input type="hidden" class="form-control" th:field="*{id}"/>
+				</div>
+				<div class="form-group">
+					<label th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"
+						   class="alert alert-danger"></label>
+					<input type="text" class="form-input" name="name" id="fullname" th:field="*{fullname}"
+						   placeholder="Full Name"/>
+				</div>
+				<div class="form-group">
+					<label th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+						   class="alert alert-danger"></label>
+					<input type="text" class="form-input" name="name" id="address" th:field="*{address}"
+						   placeholder="Address"/>
+				</div>
+				<div class="form-group">
+					<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+						   class="alert alert-danger"></label>
+					<input type="text" class="form-input" name="name" id="name" th:field="*{email}"
+						   placeholder="Email"/>
+				</div>
+				<div class="form-group">
+					<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+						   class="alert alert-danger"></label>
+					<input type="text" class="form-input" name="password" id="password" placeholder="Password"/>
+					<span toggle="#password" th:field="*{password}"
+						  class="zmdi zmdi-eye field-icon toggle-password"></span>
+				</div>
+				<div class="form-group">
+					<input type="checkbox" name="agree-term" id="agree-term" class="agree-term"/>
+					<label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in
+						<a href="#" class="term-service">Terms of service</a></label>
+				</div>
+				<div class="form-group">
+					<input type="submit" name="submit" id="submit" class="form-submit submit" value="Sign up"/>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- JS -->
+<script src="/loginCss/vendor/jquery/jquery.min.js"></script>
+<script src="/loginCss/js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

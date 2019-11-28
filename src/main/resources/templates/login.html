@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form</title>
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/loginCss/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="/loginCss/css/style.css">
+</head>
+<body>
+
+<div class="main">
+    <div class="container">
+        <div class="signup-content">
+            <form autocomplete="off" th:action="@{/login}" method="post" role="form" id="signup-form" class="signup-form">
+                <div style='display:none'><input type='hidden' name='csrfmiddlewaretoken'
+                                                 value='GBFs8dpdU4oMnI92HERYMd33OUWHunmM'/></div>
+                <div style='display:none'><input type='hidden' name='csrfmiddlewaretoken'
+                                                 value='GBFs8dpdU4oMnI92HERYMd33OUWHunmM'/></div>
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        Invalid username and password.
+                    </div>
+                </div>
+                <div th:if="${param.logout}">
+                    <div class="alert alert-info">
+                        You have been logged out.
+                    </div>
+                </div>
+                <h2>Login</h2>
+                <div class="form-group">
+                    <input name="username" maxlength="254" type="text" required="true"
+                           autofocus="true" placeholder="Tên tài khoản"
+                           class="form-input" id="id_username"/>
+                </div>
+                <div class="form-group">
+                    <input placeholder="Mật khẩu" required="required"
+                           type="password" class="form-input" name="password" id="password"/>
+                    <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" name="agree-term" id="agree-term" class="agree-term"/>
+                    <label for="agree-term" class="label-agree-term"><span><span></span></span>Remmenber Me
+                        <!-- <a href="#" class="term-service">Terms of service</a>--></label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" name="submit" id="submit" class="form-submit submit" value="Login"/>
+                    <a th:href="@{'/sign-up'}" class="submit-link submit">Sign Up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/loginCss/vendor/jquery/jquery.min.js"></script>
+<script src="/loginCss/js/main.js"></script>
+</body>
+</html>
