@@ -8,18 +8,17 @@
              th:src="|/images/${image}|"
              class="img-fluid"
              style="border: 1px solid red ;margin-bottom: 20px" alt="">-->
-      <!--  <div class="container">
-            <img th:each="image : ${chapter.getUploadFile()}"
-                 th:src="|/images/${image}|"
+        <div class="container">
+            <img th:each="u : ${allFile}"
+                 th:src="${u.link}"
                  class="img-fluid"alt="green-parrot-picture"/>
-        </div>-->
+        </div>
     </div>
 </div>
 <style>
     .container {
         max-width: max-content;
     }
-
     img {
         /*width: 199px;
         height: 294px;*/

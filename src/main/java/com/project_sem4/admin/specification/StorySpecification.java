@@ -35,12 +35,12 @@ public class StorySpecification implements Specification<Story> {
             );
             return predicate;
         } else if (criteria.getOperation().equalsIgnoreCase("join")) {
-            Join<Story, Category> bookCategoryJoin = root.join("categories");
+            Join<Story, Category> storyCategoryJoin = root.join("categories");
             Predicate predicate = builder.or(
                     builder.like(root.get("title"), "%" + criteria.getValue() + "%"),
                     builder.like(root.get("description"), "%" + criteria.getValue() + "%"),
                     builder.like(root.get("director"), "%" + criteria.getValue() + "%"),
-                    builder.like(bookCategoryJoin.get("name"), "%" + criteria.getValue() + "%")
+                    builder.like(storyCategoryJoin.get("name"), "%" + criteria.getValue() + "%")
             );
             return predicate;
         }

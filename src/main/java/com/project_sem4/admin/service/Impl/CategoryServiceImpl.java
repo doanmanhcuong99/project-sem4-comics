@@ -2,12 +2,18 @@ package com.project_sem4.admin.service.Impl;
 
 
 import com.project_sem4.admin.entity.Category;
+import com.project_sem4.admin.entity.Story;
 import com.project_sem4.admin.pagination.PageModel;
 import com.project_sem4.admin.repository.CategoryRepository;
 import com.project_sem4.admin.service.CategoryService;
+import com.project_sem4.admin.specification.CategorySpecification;
+import com.project_sem4.admin.specification.SearchCriteria;
+import com.project_sem4.admin.specification.StorySpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -38,7 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Long create(Category categoryDetails) {
-       /* categoryDetails.setDatecreated(Calendar.getInstance().getTimeInMillis());*/
+        /* categoryDetails.setDatecreated(Calendar.getInstance().getTimeInMillis());*/
         categoryRepository.save(categoryDetails);
         return categoryDetails.getId();
     }
@@ -55,4 +61,10 @@ public class CategoryServiceImpl implements CategoryService {
     public void delete(Long catId) {
         categoryRepository.deleteById(catId);
     }
+
+    @Override
+    public Page<Category> findAllCategory(Specification specification, Pageable pageable) {
+        return categoryRepository.findAll(specification, pageable);
+    }
+
 }

@@ -6,6 +6,7 @@ import com.project_sem4.admin.entity.Story;
 import com.project_sem4.admin.entity.UploadFile;
 import com.project_sem4.admin.service.ChapterService;
 import com.project_sem4.admin.service.StoryService;
+import com.project_sem4.admin.service.UploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class ChapterController {
@@ -25,6 +23,8 @@ public class ChapterController {
     private StoryService storyService;
     @Autowired
     ChapterService chapterService;
+    @Autowired
+    UploadFileService uploadFileService;
 
     @GetMapping("/chapters")
     public String getAllChapter(Model model) {
@@ -65,7 +65,7 @@ public class ChapterController {
             }
         }
         chapterService.create(storyId, chapter);
-        return "chapters/new";
+        return "redirect:/story/chapters/{storyId}";
     }
     // end post
 
@@ -73,7 +73,7 @@ public class ChapterController {
     public String showSingleStory(@PathVariable("id") long id, Model model) {
         Chapter chapter = chapterService.findById(id);
         model.addAttribute("chapter", chapter);
+        model.addAttribute("allFile", uploadFileService.getAllFileByChapter(id));
         return "chapters/showById";
     }
-
 }

@@ -2,18 +2,23 @@ package com.project_sem4.admin.controller;
 
 
 import com.project_sem4.admin.entity.Account;
+import com.project_sem4.admin.entity.Story;
 import com.project_sem4.admin.service.AccountService;
+import com.project_sem4.admin.service.StoryService;
+import com.project_sem4.admin.specification.AccountSpecification;
+import com.project_sem4.admin.specification.SearchCriteria;
+import com.project_sem4.admin.specification.StorySpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -24,6 +29,8 @@ public class AccountController {
     AccountService accountService;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    StoryService storyService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/login")
     public String showLoginPage(@Valid Account account, BindingResult bindingResult) {
@@ -92,10 +99,26 @@ public class AccountController {
     }
 
     @GetMapping(value = "/allAccount")
-    public String showAllAccount(Model model) {
-        model.addAttribute("accounts", accountService.getAll());
+    public String showAllAccount(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "limit", defaultValue = "5") int limit,
+            Model model) {
+        Specification specification = Specification.where(null);
+        if (keyword != null && keyword.length() > 0) {
+            specification = specification
+                    .and(new AccountSpecification(new SearchCriteria("keyword", "join", keyword)));
+            model.addAttribute("keyword", keyword);
+        }
+        Page<Account> accountPage = accountService.findAllActiveAccount(specification, PageRequest.of(page - 1, limit));
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("accounts", accountPage.getContent());
+        model.addAttribute("currentPage", accountPage.getPageable().getPageNumber() + 1);
+        model.addAttribute("limit", accountPage.getPageable().getPageSize());
+        model.addAttribute("totalPage", accountPage.getTotalPages());
         return "accounts/list";
     }
+
     @RequestMapping(value = "/account/show/{id}")
     public String showDetail(@PathVariable("id") long id, Model model) {
         Account account = accountService.findById(id);

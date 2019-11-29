@@ -32,9 +32,10 @@ public class StoryController {
     private ChapterService chapterService;
     @Autowired
     private AccountService accountService;
+
     @RequestMapping(value = "/stories/account/{id}", method = RequestMethod.GET)
     public String StoryByAccount(@PathVariable Long id,
-                                  Model model) {
+                                 Model model) {
         Optional<Account> accountOptional = accountService.findForId(id);
         if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
@@ -47,6 +48,7 @@ public class StoryController {
             return "/error";
         }
     }
+
     //List Story
     @GetMapping(value = "/stories")
     public String list(
@@ -102,7 +104,7 @@ public class StoryController {
         return "stories/showById";
     }
 
-    //New ChapterByStory
+    //ChapterByStory
     @GetMapping("/story/chapters/{id}")
     public String getChaptersByStory(@PathVariable("id") Long storyId, Model model) {
         Optional<Story> stories = storyService.findForId(storyId);
@@ -126,7 +128,6 @@ public class StoryController {
         storyService.update(storyId, story);
         return "redirect:/stories";
     }
-
 
 
 }

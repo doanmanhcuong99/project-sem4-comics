@@ -2,62 +2,81 @@
     <div class="header">
         <h4 class="title">Categories</h4>
         <p class="category">shows all Categories</p>
-        <a class="btn btn-success" th:href="@{/category/create}">New category</a>
+        <div class="row">
+            <form th:action="@{/categories}" method="get">
+                <div class="col-sm-9 ">
+                    <a class="btn btn-success" th:href="@{/category/create}">New category</a>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group no-border">
+                        <input type="text" th:value="${keyword}" name="keyword" class="form-control"
+                               placeholder="Search...">
+                        <input type="hidden" th:value="${limit}" name="limit">
+                        <input type="hidden" th:value="${currentPage}" name="page">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <i class="nc-icon nc-zoom-split"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <th:block th:if="${#lists.isEmpty(categories)}">
+            <h5 style="color: red">Not Found</h5>
+        </th:block>
     </div>
 
     <div class="content table-responsive table-full-width">
-        <table class="table table-striped">
-            <thead>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th></th>
-            </thead>
-            <tbody>
-            <tr th:remove="all">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr th:each="category : ${categories}">
-                <td th:text="${category.id}"></td>
-                <td th:text="${category.name}"></td>
-                <td th:text="${category.description}"></td>
-                <td>
-                    <a th:href="@{'/category/' + ${category.id}}" class="btn btn-default"><i
-                            class="fa fa-search"></i></a>
-                    <a th:href="@{'/category/stories/' + ${category.id}}" class="btn btn-primary"><i
-                            class="fa fa-list"></i></a>
+        <th:block th:unless="${#lists.isEmpty(categories)}">
+            <table class="table table-striped">
+                <thead>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th class="text-center">Action</th>
+                </thead>
+                <tbody>
+                <tr th:each="category : ${categories}">
+                    <td th:text="${category.id}"></td>
+                    <td th:text="${category.name}"></td>
+                    <td th:text="${category.description}"></td>
+                    <td class="text-center">
+                        <a th:href="@{'/category/' + ${category.id}}" class="btn btn-default btn-xs"><i
+                                class="fa fa-pencil-square-o"></i></a>
+                        <a th:href="@{'/category/stories/' + ${category.id}}" class="btn btn-default btn-xs"><i
+                                class="fa fa-list"></i></a>
+                        <a th:href="@{'/category/delete/' + ${category.id}}" class="btn btn-default btn-xs"><i
+                                class="fa fa-trash-o"></i></a>
 
-                    <a th:href="@{'/category/delete/' + ${category.id}}" class="btn btn-danger"><i
-                            class="fa fa-trash-o"></i></a></td>
-            </tr>
-            </tbody>
-        </table>
-        <nav aria-label="Pagination" th:if="${categories.totalPages gt 0}">
-            <ul class="pagination justify-content-center font-weight-bold">
-                <li class="page-item" th:classappend="${categories.number eq 0} ? 'disabled'">
-                    <a class="page-link"
-                       th:href="@{/categories?page={id}(id=${categories.number lt 2 ? 1 : categories.number})}"
-                       aria-label="Previous" title="Previous Page" data-toggle="tooltip">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" th:classappend="${i eq categories.number + 1} ? 'active'"
-                    th:each="i : ${#numbers.sequence( 1, categories.totalPages, 1)}">
-                    <a class="page-link" th:href="@{/categories?page={id}(id=${i})}" th:text="${i}"
-                       th:title="${'Page '+ i}" data-toggle="tooltip"></a>
-                </li>
-                <li class="page-item" th:classappend="${categories.number + 1 eq categories.totalPages} ? 'disabled'">
-                    <a class="page-link"
-                       th:href="@{/categories?page={id}(id=${categories.number + 2})}"
-                       aria-label="Next" title="Next Page" data-toggle="tooltip">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+                </tr>
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example" th:if="${totalPage > 1}">
+                <ul class="pagination float-right">
+                    <li class="page-item"><a class="page-link"
+                                             th:href="@{/categories(page=${1}, limit=${limit})}">First</a>
+                    </li>
+                    <li th:if="${currentPage > 1}" class="page-item"><a class="page-link"
+                                                                        th:href="@{/categories(page=${currentPage - 1}, limit=${limit})}">Previous</a>
+                    </li>
+                    <li th:if="${currentPage > 1}" class="page-item"><a class="page-link"
+                                                                        th:href="@{/categories(page=${currentPage - 1}, limit=${limit})}">[[${currentPage
+                        - 1}]]</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">[[${currentPage}]]</a>
+                    </li>
+                    <li th:if="${currentPage < totalPage}" class="page-item"><a class="page-link"
+                                                                                th:href="@{/categories(page=${currentPage + 1}, limit=${limit})}">[[${currentPage
+                        + 1}]]</a></li>
+                    <li th:if="${currentPage < totalPage}" class="page-item"><a class="page-link"
+                                                                                th:href="@{/categories(page=${currentPage + 1}, limit=${limit})}">Next</a>
+                    </li>
+                    <li class="page-item"><a class="page-link"
+                                             th:href="@{/categories(page=${totalPage}, limit=${limit})}">Last</a>
+
+                </ul>
+            </nav>
+        </th:block>
 
     </div>
 </div>

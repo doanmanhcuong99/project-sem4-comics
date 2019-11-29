@@ -2,12 +2,18 @@ package com.project_sem4.admin.service.Impl;
 
 
 import com.project_sem4.admin.entity.Account;
+import com.project_sem4.admin.entity.Story;
 import com.project_sem4.admin.pagination.PageModel;
 import com.project_sem4.admin.repository.AccountRepository;
 import com.project_sem4.admin.service.AccountService;
+import com.project_sem4.admin.specification.AccountSpecification;
+import com.project_sem4.admin.specification.SearchCriteria;
+import com.project_sem4.admin.specification.StorySpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
 
     public Account register(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
-        account.setRole("user");
+        account.setRole(Account.Role.ADMIN.getValue());
         return accountRepository.save(account);
     }
 
@@ -101,12 +107,20 @@ public class AccountServiceImpl implements AccountService {
         }
         return accountOptional.get();
     }
+
     @Override
     public Page<Account> getAll() {
         pageModel.setSIZE(5);
         pageModel.initPageAndSize();
         return accountRepository.findAll(PageRequest.of(pageModel.getPAGE(), pageModel.getSIZE()));
 
+    }
+
+    @Override
+    public Page<Account> findAllActiveAccount(Specification specification, Pageable pageable) {
+        specification = specification
+                .and(new AccountSpecification(new SearchCriteria("status", "!=", Account.Status.DELETED.getValue())));
+        return accountRepository.findAll(specification, pageable);
     }
 
 }

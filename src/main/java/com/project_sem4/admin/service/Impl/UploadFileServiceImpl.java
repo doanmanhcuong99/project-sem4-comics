@@ -61,4 +61,11 @@ public class UploadFileServiceImpl implements UploadFileService {
         uploadFileRepository.delete(existUploadFile);
         return true;
     }
+
+    @Override
+    public List<UploadFile> getAllFileByChapter(Long chapterId) {
+        return uploadFileRepository.findAllByChapterId(chapterId);
+    }
+
+
 }

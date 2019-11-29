@@ -1,7 +1,10 @@
 package com.project_sem4.admin.service;
 
 import com.project_sem4.admin.entity.Account;
+import com.project_sem4.admin.entity.Story;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Optional;
 
@@ -29,4 +32,5 @@ public interface AccountService {
     Account findById(Long accountId);
 
     Page<Account> getAll();
+    Page<Account> findAllActiveAccount(Specification specification, Pageable pageable);
 }

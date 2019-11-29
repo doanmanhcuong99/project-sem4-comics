@@ -1,12 +1,11 @@
 <div class="card" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="header">
-        <h4 class="title">Comics</h4>
+        <h4 class="title">Story</h4>
         <p class="category">shows all available comics</p>
         <div class="row">
             <form th:action="@{/stories}" method="get">
-
                 <div class="col-sm-9 ">
-                    <a class="btn btn-success" th:href="@{/story/create}">New author</a>
+                    <a class="btn btn-success" th:href="@{/story/create}">New Story</a>
                 </div>
                 <div class="col-sm-3">
                     <div class="input-group no-border">
@@ -22,7 +21,7 @@
             </form>
         </div>
         <th:block th:if="${#lists.isEmpty(stories)}">
-            <h5>No comics</h5>
+            <h5 style="color: red">Not Found</h5>
         </th:block>
     </div>
     <div class="content table-responsive table-full-width">

@@ -18,4 +18,5 @@ public interface ChapterService {
 
 
     Page<Chapter> getAllChapterByStory(Long storyId);
+
 }

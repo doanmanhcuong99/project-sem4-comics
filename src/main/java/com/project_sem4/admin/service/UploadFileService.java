@@ -1,5 +1,6 @@
 package com.project_sem4.admin.service;
 
+import com.project_sem4.admin.entity.Chapter;
 import com.project_sem4.admin.entity.UploadFile;
 import org.springframework.data.domain.Page;
 
@@ -18,4 +19,5 @@ public interface UploadFileService {
 
     boolean Delete(long id);
 
+    List<UploadFile> getAllFileByChapter(Long chapterId);
 }
