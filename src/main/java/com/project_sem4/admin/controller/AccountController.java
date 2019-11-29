@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,11 +27,12 @@ public class AccountController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/login")
     public String showLoginPage(@Valid Account account, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "login";
         }
-        return "index";
+        return "login";
     }
+
     @RequestMapping(method = RequestMethod.GET, value = "/sign-up")
     public String createAccount(Model model) {
         model.addAttribute("account", new Account());
@@ -60,11 +62,11 @@ public class AccountController {
 
     //?
     @RequestMapping(method = RequestMethod.GET, value = "/{email}")
-    public ResponseEntity<Account> detail(@PathVariable String email){
+    public ResponseEntity<Account> detail(@PathVariable String email) {
         Account account = accountService.getByEmail(email);
-        if (account == null){
+        if (account == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }else {
+        } else {
             return new ResponseEntity<>(account, HttpStatus.OK);
         }
     }
@@ -74,5 +76,30 @@ public class AccountController {
         model.addAttribute("list", accountService.getList(1, 10));
         return "account/list";
 
+    }
+
+    @RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
+    public String editForm(@PathVariable("id") long id, Model model) {
+        Account account = accountService.findById(id);
+        model.addAttribute("account", account);
+        return "accounts/edit";
+    }
+
+    @RequestMapping(value = "/account/{id}", method = RequestMethod.POST)
+    public String updateUser(@PathVariable("id") long accountId, Account account) {
+        accountService.update(accountId, account);
+        return "redirect:/allAccount";
+    }
+
+    @GetMapping(value = "/allAccount")
+    public String showAllAccount(Model model) {
+        model.addAttribute("accounts", accountService.getAll());
+        return "accounts/list";
+    }
+    @RequestMapping(value = "/account/show/{id}")
+    public String showDetail(@PathVariable("id") long id, Model model) {
+        Account account = accountService.findById(id);
+        model.addAttribute("account", account);
+        return "accounts/showById";
     }
 }

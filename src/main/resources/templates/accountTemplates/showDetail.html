@@ -1,0 +1,10 @@
+<div class="card" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="header">
+        <span>Profile   <h4 th:text="${account.fullname}" class="title"></h4></span>
+        <p class="category">Details</p>
+    </div>
+    <div class="content">
+        <p th:text="${account.email}"></p>
+        <p th:text="${account.address}"></p>
+    </div>
+</div>

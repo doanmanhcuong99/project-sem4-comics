@@ -34,8 +34,7 @@
                         <th>ID</th>
                         <th>Title</th>
                         <th>Author</th>
-                        <th>CreateByUser</th>
-                        <!--<th>CoverImg</th>-->
+                        <th>CreateByAccount</th>
                         <th>Category</th>
                         <th>Status</th>
                         <th class="text-center">Action</th>
@@ -48,12 +47,13 @@
                             <td th:text="${story.id}"></td>
                             <td th:text="${story.title}"></td>
                             <td th:text="${story.director}"></td>
-                            <td><a th:text="${story.account.fullname}"></a></td>
-                           <!-- <td>
-                                <div class="container">
-                                    <img th:src="|/images/${story.getThumbnail()}|" alt="green-parrot-picture"/>
-                                </div>
-                            </td>-->
+                            <td><a th:text="${story.account.fullname}"
+                                   th:href="@{'/stories/account/' + ${story.account.id}}"></a></td>
+                            <!-- <td>
+                                 <div class="container">
+                                     <img th:src="|/images/${story.getThumbnail()}|" alt="green-parrot-picture"/>
+                                 </div>
+                             </td>-->
                             <td>
                                 <th:block th:each="category : ${story.categories}">
                                     <span th:text="'|'+${category.name} "></span>
@@ -61,23 +61,13 @@
                             </td>
                             <td th:text="${story.status}"></td>
 
-                           <!-- <td>
-                                <div th:if="${story.status == T(com.project.cms.entity.Status).OPEN}">
-                                    <a class="dropdown-item"
-                                       th:href="@{/story/{id}/{action}(id=${story.id}, action='close')}">CLOSE</a>
-                                </div>
-                                <div th:if="${story.status == T(com.project.cms.entity.Status).CLOSED}">
-                                    <a class="dropdown-item"
-                                       th:href="@{/story/{id}/{action}(id=${story.id}, action='open')}">OPEN</a>
-                                </div>
-                            </td>-->
                             <td class="text-center">
                                 <a th:href="@{'/story/show/' + ${story.id}}" class="btn btn-primary btn-xs"><i
                                         class="fa fa-search"></i></a>
-                              <!--  <a th:href="@{'/story/' + ${story.id}}" class="btn btn-default btn-xs"><i
+                                <a th:href="@{'/story/' + ${story.id}}" class="btn btn-default btn-xs"><i
                                         class="fa fa-pencil-square-o"></i></a>
-                                <a th:href="@{'/story/delete/' + ${story.id}}" class="btn btn-danger btn-xs"><i
-                                        class="fa fa-trash-o"></i></a>-->
+                                <!--  <a th:href="@{'/story/delete/' + ${story.id}}" class="btn btn-danger btn-xs"><i
+                                          class="fa fa-trash-o"></i></a>-->
                                 <a th:href="@{'/story/chapters/'+ ${story.id}}" class="btn btn-default btn-xs"><i
                                         class="fa fa-list"></i></a>
                             </td>

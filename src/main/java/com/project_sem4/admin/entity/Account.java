@@ -29,7 +29,8 @@ public class Account {
     @NotEmpty(message = "*Please provide your Address")
     private String address;
     private String role;
-
+    @OneToMany(mappedBy = "account")
+    private Collection<Story> stories;
 
     public enum Role {
         ADMIN("admin"), USER("user");
@@ -64,8 +65,6 @@ public class Account {
         this.stories = stories;
     }
 
-    @OneToMany(mappedBy = "account")
-    private Collection<Story> stories;
 
     public enum Status {
         ACTIVE(1), DEACTIVE(0), DELETED(-1);

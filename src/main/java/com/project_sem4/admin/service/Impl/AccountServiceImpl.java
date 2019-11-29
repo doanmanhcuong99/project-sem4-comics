@@ -2,6 +2,7 @@ package com.project_sem4.admin.service.Impl;
 
 
 import com.project_sem4.admin.entity.Account;
+import com.project_sem4.admin.pagination.PageModel;
 import com.project_sem4.admin.repository.AccountRepository;
 import com.project_sem4.admin.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class AccountServiceImpl implements AccountService {
     AccountRepository accountRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    PageModel pageModel;
 
     public Account getDetail(String email) {
         return accountRepository.findByEmail(email).orElse(null);
@@ -76,4 +79,34 @@ public class AccountServiceImpl implements AccountService {
     public Optional<Account> findByEmail(String email) {
         return accountRepository.findByEmail(email);
     }
+
+    @Override
+    public Optional<Account> findForId(Long accountId) {
+        return accountRepository.findById(accountId);
+    }
+
+    @Override
+    public void update(Long accountId, Account accountDetails) {
+        Account currentAccount = findById(accountId);
+        currentAccount.setFullname(accountDetails.getFullname());
+        currentAccount.setAddress(accountDetails.getAddress());
+        accountRepository.save(currentAccount);
+    }
+
+    @Override
+    public Account findById(Long accountId) {
+        Optional<Account> accountOptional = accountRepository.findById(accountId);
+        if (!accountOptional.isPresent()) {
+            throw new RuntimeException("Account Not Found!");
+        }
+        return accountOptional.get();
+    }
+    @Override
+    public Page<Account> getAll() {
+        pageModel.setSIZE(5);
+        pageModel.initPageAndSize();
+        return accountRepository.findAll(PageRequest.of(pageModel.getPAGE(), pageModel.getSIZE()));
+
+    }
+
 }

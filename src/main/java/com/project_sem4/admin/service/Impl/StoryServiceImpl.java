@@ -1,5 +1,6 @@
 package com.project_sem4.admin.service.Impl;
 
+import com.project_sem4.admin.entity.Account;
 import com.project_sem4.admin.entity.Story;
 import com.project_sem4.admin.pagination.PageModel;
 import com.project_sem4.admin.repository.StoryRepository;
@@ -60,13 +61,20 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
+    public Page<Story> findByAccountOrderByCreatedAtDesc(Account account) {
+        pageModel.setSIZE(5);
+        pageModel.initPageAndSize();
+        return storyRepository.findByAccountOrderByCreatedAtDesc(account, PageRequest.of(pageModel.getPAGE(), pageModel.getSIZE()));
+    }
+
+    @Override
     public void update(Long storyId, Story storyDetails) {
         Story currentStory = findById(storyId);
         currentStory.setTitle(storyDetails.getTitle());
         currentStory.setDirector(storyDetails.getDirector());
         currentStory.setCategories(storyDetails.getCategories());
         currentStory.setDescription(storyDetails.getDescription());
-        currentStory.setStatus(storyDetails.getStatus());
+        currentStory.setUpdatedAt(Calendar.getInstance().getTimeInMillis());
         storyRepository.save(currentStory);
     }
 

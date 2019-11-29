@@ -2,20 +2,21 @@ package com.project_sem4.admin.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "chapter")
 public class Chapter {
+
     @Id
     @Column(name = "chapter_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @NotEmpty
     private String title;
-    private String name;
     private String content;
-    private int status;
     // chapter-story
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "story_id")
@@ -25,35 +26,21 @@ public class Chapter {
     private Set<UploadFile> upload_file;
     private int code;
     private int episode;
+    private int status;
     private long createdAt;
     private long updatedAt;
     private long deletedAt;
 
     public Chapter() {
-
+        this.initial();
     }
 
-    public void setId(long id) {
-        this.id = id;
+    private void initial() {
+        this.status = 1;
+        this.createdAt = Calendar.getInstance().getTimeInMillis();
+        this.updatedAt = Calendar.getInstance().getTimeInMillis();
     }
 
-    public enum Status {
-        ACTIVE(1), DEACTIVE(0), DELETED(-1);
-
-        private int value;
-
-        Status(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public void setValue(int value) {
-            this.value = value;
-        }
-    }
 
     public Long getId() {
         return id;
@@ -143,11 +130,11 @@ public class Chapter {
         this.deletedAt = deletedAt;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void addUploadFile(UploadFile uploadFile) {
+        if (this.upload_file == null) {
+            this.upload_file = new HashSet<>();
+        }
+        this.upload_file.add(uploadFile);
+        uploadFile.setChapter(this);
     }
 }

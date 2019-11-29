@@ -2,6 +2,8 @@ package com.project_sem4.admin.controller;
 
 
 import com.project_sem4.admin.entity.Chapter;
+import com.project_sem4.admin.entity.Story;
+import com.project_sem4.admin.entity.UploadFile;
 import com.project_sem4.admin.service.ChapterService;
 import com.project_sem4.admin.service.StoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,7 @@ public class ChapterController {
         return "chapters/list";
     }
 
-
+    // truyen upload len
     @GetMapping("/chapters/create/{storyId}")
     public String createChapter(Model model, @PathVariable("storyId") Long storyId) {
         Chapter chapter = new Chapter();
@@ -40,12 +42,32 @@ public class ChapterController {
     }
 
     @PostMapping("/chapters/create/{storyId}")
-    public String saveChapter(@PathVariable("storyId") Long storyId, Chapter chapter) {
-        List<Chapter> chapters = new ArrayList<>();
-        chapters.add(chapter);
+    public String saveChapter(@PathVariable("storyId") Long storyId,
+                              @RequestParam(name = "title", required = true) String title,
+                              @RequestParam(name = "content", required = true) String content,
+                              @RequestParam(name = "images", required = true) String[] images,
+                              Model model
+    ) {
+        Story story = storyService.findById(storyId);
+        if (story == null) {
+            return "exception/error404";
+        }
+        Chapter chapter = new Chapter();
+        chapter.setStory(story);
+        chapter.setTitle(title);
+        chapter.setContent(content);
+        chapter.setCode(1);
+        chapter.setEpisode(1);
+        if (images != null && images.length > 0) {
+            for (int i = 0; i < images.length; i++) {
+                String link = images[i];
+                chapter.addUploadFile(new UploadFile(link));
+            }
+        }
         chapterService.create(storyId, chapter);
-        return "redirect:/story/chapters/{storyId}";
+        return "chapters/new";
     }
+    // end post
 
     @RequestMapping(value = "/chapter/show/{id}")
     public String showSingleStory(@PathVariable("id") long id, Model model) {

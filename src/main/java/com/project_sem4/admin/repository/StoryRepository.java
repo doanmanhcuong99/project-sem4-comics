@@ -1,6 +1,7 @@
 package com.project_sem4.admin.repository;
 
 
+import com.project_sem4.admin.entity.Account;
 import com.project_sem4.admin.entity.Story;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,9 +21,13 @@ import java.util.Optional;
 public interface StoryRepository extends JpaRepository<Story, Long>, JpaSpecificationExecutor<Story> {
     Optional<Story> findById(long storyId);
 
+    Page<Story> findByAccountOrderByCreatedAtDesc(Account account, Pageable pageable);
+
     Page<Story> findAll(Specification specification, Pageable pageable);
+
     @Transactional
     @Modifying
     @Query("update Story b set b.view = b.view+1 where b.id = ?1")
     int updateViews(Long storyId);
+
 }

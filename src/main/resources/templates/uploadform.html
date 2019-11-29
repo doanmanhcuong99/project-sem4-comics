@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload Multiple Files</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<!--	<div class="container h-100">-->
+<!--	<div class="h-100">-->
+<!--		<div class="row h-100 justify-content-center align-items-center">-->
+<!--			<div class="col-sm-5">-->
+<!--				<h3>Upload Multiple Files to FileSystem</h3>-->
+<!--				<form method="POST" enctype="multipart/form-data" id="fileUploadForm" action="/upload_file/aa">-->
+<!--					<div class="form-group">-->
+<!--						<label class="control-label" for="files">Upload Multiple Files:</label>-->
+<!--						<input type="file" class="form-control" id="files" -->
+<!--								placeholder="Upload Multiple Files"  name="files" multiple></input>-->
+<!--					</div>-->
+<!--					<button type="submit" class="btn btn-default" id="btnSubmit">Upload</button>-->
+<!--					<a href="/upload_file/files" class="btn btn-default" role="button">Files</a>-->
+<!--				</form>-->
+<!--				<div th:if="${message}">-->
+<!--					<strong><span th:text="${message}"/></strong>-->
+<!--					<hr>-->
+<!--				</div>-->
+<!--				<ul th:each="filename: ${files}">-->
+<!--					<li><span th:text="${filename}"/></li>-->
+<!--				</ul>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--	</div>-->
+
+<h1>Upload file</h1>
+<div>
+    <form th:action="@{/upload_file/store-chapter}" method="post">
+        <input type="text" name="title">
+        <input type="text" name="content">
+        <input type="text" name="images">
+
+        <input type="submit" value="Submit Chapter">
+    </form>
+</div>
+<div id="showImage">
+</div>
+<button id="upload_widget" class="cloudinary-button">Get File</button>
+<button id="btnShow" class="cloudinary-button">Show Image</button>
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var myWidget = cloudinary.createUploadWidget({
+            cloudName: 'ansg',
+            uploadPreset: 'dhiefvbh'
+        }, function (error, result) {
+            if (!error && result && result.event === "success") {
+                var imagesTag = document.querySelector("input[name='images']");
+                if(imagesTag.value.length != 0){
+                    imagesTag.value += ',';
+                }
+                imagesTag.value += result.info.secure_url;
+                console.log(result.info.secure_url);
+            }
+        }
+    )
+
+    document.getElementById("upload_widget").addEventListener("click", function () {
+        myWidget.open();
+    }, false);
+
+    document.getElementById('btnShow').onclick= function () {
+        alert('show image.');
+        var imagesString = document.querySelector("input[name='images']").value;
+        var imgLink = imagesString.split(",");
+        var contentHtml = '';
+        for (var i = 0; i < imgLink.length; i++) {
+            contentHtml += `<img src="${imgLink[i]}">`;
+        }
+        document.getElementById('showImage').innerHTML = contentHtml;
+    }
+</script>
+</body>
+</html>

@@ -32,7 +32,21 @@ public class StoryController {
     private ChapterService chapterService;
     @Autowired
     private AccountService accountService;
-
+    @RequestMapping(value = "/stories/account/{id}", method = RequestMethod.GET)
+    public String StoryByAccount(@PathVariable Long id,
+                                  Model model) {
+        Optional<Account> accountOptional = accountService.findForId(id);
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            Page<Story> stories = storyService.findByAccountOrderByCreatedAtDesc(account);
+            model.addAttribute("stories", stories);
+            model.addAttribute("account", account);
+            model.addAttribute("accountname", account.getFullname());
+            return "stories/showByUsername";
+        } else {
+            return "/error";
+        }
+    }
     //List Story
     @GetMapping(value = "/stories")
     public String list(
@@ -96,5 +110,23 @@ public class StoryController {
         model.addAttribute("chapters", chapterService.getAllChapterByStory(storyId));
         return "stories/showByIdStories";
     }
+
+    //Update Story
+    @RequestMapping(value = "/story/{id}", method = RequestMethod.GET)
+    public String editForm(@PathVariable("id") long id, Model model) {
+        Story story = storyService.findById(id);
+        Page<Category> categories = categoryService.getAll();
+        model.addAttribute("allCategories", categories);
+        model.addAttribute("story", story);
+        return "stories/edit";
+    }
+
+    @RequestMapping(value = "/story/{id}", method = RequestMethod.POST)
+    public String updateStory(@PathVariable("id") long storyId, Story story) {
+        storyService.update(storyId, story);
+        return "redirect:/stories";
+    }
+
+
 
 }

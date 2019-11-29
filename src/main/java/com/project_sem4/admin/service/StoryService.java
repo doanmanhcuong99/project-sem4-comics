@@ -1,5 +1,6 @@
 package com.project_sem4.admin.service;
 
+import com.project_sem4.admin.entity.Account;
 import com.project_sem4.admin.entity.Story;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,9 @@ public interface StoryService {
 
     Page<Story> findAllActive(Specification specification, Pageable pageable);
 
+    Page<Story> findByAccountOrderByCreatedAtDesc(Account account);
+
     Optional<Story> findForId(Long storyId);
     /*    Set<Story> getTasksByStatus(Status status);*/
+
 }

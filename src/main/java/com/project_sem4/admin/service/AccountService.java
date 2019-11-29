@@ -21,4 +21,12 @@ public interface AccountService {
     Optional<Account> findByFullName(String fullname);
 
     Optional<Account> findByEmail(String email);
+
+    Optional<Account> findForId(Long accountId);
+
+    void update(Long accountId, Account accountDetails);
+
+    Account findById(Long accountId);
+
+    Page<Account> getAll();
 }

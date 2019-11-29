@@ -1,0 +1,42 @@
+<div class="card" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="header">
+        <h4 class="title">Edit Book</h4>
+        <p class="category">fill out & click save</p>
+    </div>
+
+    <div class="content">
+        <form th:object="${story}" th:action="@{/story/{id}(id=${story.id})}" th:method="post">
+            <div class="form-group">
+                <input type="hidden" class="form-control" th:field="*{id}"/>
+            </div>
+            <div class="form-group">
+                <label for="title">Tên truyện </label>
+                <label th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                       class="alert alert-danger"></label>
+                <input type="text" class="form-control" id="title" aria-describedby="title" th:field="*{title}"
+                       playeholder="Harry Potter and the Deathly Hollows">
+            </div>
+            <div class="form-group">
+                <label for="author">Tác giả</label>
+                <input type="text" class="form-control" aria-describedby="author" th:field="*{director}"
+                       playeholder="Joanne K. Rowling"/>
+            </div>
+            <div class="form-group">
+                <label for="category">Thể loại</label>
+                <div class="form-control" th:each="category : ${allCategories}">
+                    <label><input id="category" style="margin-left: 0px;" type="checkbox"
+                                  th:field="*{categories}" th:value="${category.id}"/><span
+                            th:text="${category.name}"></span></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Giới thiệu truyện :</label>
+                <textarea rows="4" type="textarea" class="form-control" id="description" th:field="*{description}"
+                          playeholder="type here ..."/></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a th:href="@{'/stories'}" class="btn btn-default">Cancel</a>
+        </form>
+
+    </div>
+</div>

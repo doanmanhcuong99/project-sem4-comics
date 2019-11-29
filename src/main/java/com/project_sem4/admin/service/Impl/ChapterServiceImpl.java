@@ -51,7 +51,7 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public Long create(Long storyId, Chapter chapterDetails) {
         Story story = storyService.findById(storyId);
-        chapterDetails.setStatus(Chapter.Status.DEACTIVE.getValue());
+        chapterDetails.setStatus(1);
         chapterDetails.setStory(story);
         chapterRepository.save(chapterDetails);
         return chapterDetails.getId();

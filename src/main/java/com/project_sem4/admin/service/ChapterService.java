@@ -2,6 +2,7 @@ package com.project_sem4.admin.service;
 
 ;
 import com.project_sem4.admin.entity.Chapter;
+import com.project_sem4.admin.entity.Story;
 import org.springframework.data.domain.Page;
 
 public interface ChapterService {
@@ -17,5 +18,4 @@ public interface ChapterService {
 
 
     Page<Chapter> getAllChapterByStory(Long storyId);
-
 }
