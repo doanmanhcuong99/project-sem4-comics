@@ -1,73 +1,73 @@
-<!--<!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>-->
-<div class="card">
-    <div class="header">
-        <h4 class="title">Add new Chapter</h4>
-        <p class="category">fill out & click save</p>
-    </div>
-    <div class="content">
-        <!-- th:object="${chapter}"-->
-        <form th:action="@{/chapters/create/{storyId}(storyId=${storyIds})}" th:method="post">
-            <!-- <div class="form-group">
-                 <input type="hidden" class="form-control" th:field="*{id}"/>
-             </div>-->
-            <div class="form-group">
-                <label for="title">Chap</label>
-                <input type="text" class="form-control" id="title" aria-describedby="title" name="title"
-                       playeholder="Harry Potter and the Deathly Hollows">
+<div class="col-xl-12 order-xl-1">
+    <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <h3 class="mb-0">Edit Account</h3>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="author">Content</label>
-                <input type="text" class="form-control" id="author" aria-describedby="author" name="content"
-                       playeholder="Joanne K. Rowling"/>
-            </div>
-            <div class="form-group">
-                <input type="hidden" name="images">
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary" value="Submit Chapter">Save</button>
-            </div>
-        </form>
-        <div class="form-group">
-            <button id="upload_widget" class="cloudinary-button">Get File</button>
         </div>
-        <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            var myWidget = cloudinary.createUploadWidget({
-                    cloudName: 'ansg',
-                    uploadPreset: 'dhiefvbh'
-                }, function (error, result) {
-                    if (!error && result && result.event === "success") {
-                        var imagesTag = document.querySelector("input[name='images']");
-                        if (imagesTag.value.length != 0) {
-                            imagesTag.value += ',';
+        <div class="card-body">
+            <form th:action="@{/chapters/create/{storyId}(storyId=${storyIds})}" th:method="post">
+                <h6 class="heading-small text-muted mb-4">User information</h6>
+                <div class="pl-lg-4">
+                    <div class="row">
+                     <!--   <div class="form-group">
+                            <input type="hidden" class="form-control" th:field="*{id}"/>
+                        </div>-->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="title">Chap</label>
+                                <input type="text" id="title" aria-describedby="title" name="title"
+                                       class="form-control form-control-alternative"
+                                       placeholder="Chap">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-address">Title</label>
+                                <input type="text" id="author" aria-describedby="author" name="content"
+                                       class="form-control form-control-alternative"
+                                       placeholder="Title">
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="images">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" value="Submit Chapter">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4"/>
+            </form>
+            <div class="form-group">
+                <button id="upload_widget" class="cloudinary-button">Get File</button>
+            </div>
+            <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+            <script type="text/javascript">
+                var myWidget = cloudinary.createUploadWidget({
+                        cloudName: 'ansg',
+                        uploadPreset: 'dhiefvbh'
+                    }, function (error, result) {
+                        if (!error && result && result.event === "success") {
+                            var imagesTag = document.querySelector("input[name='images']");
+                            if (imagesTag.value.length != 0) {
+                                imagesTag.value += ',';
+                            }
+                            imagesTag.value += result.info.secure_url;
+                            console.log(result.info.secure_url);
                         }
-                        imagesTag.value += result.info.secure_url;
-                        console.log(result.info.secure_url);
                     }
-                }
-            )
+                )
 
-            document.getElementById("upload_widget").addEventListener("click", function () {
-                myWidget.open();
-            }, false);
-        </script>
+                document.getElementById("upload_widget").addEventListener("click", function () {
+                    myWidget.open();
+                }, false);
+            </script>
+        </div>
     </div>
 </div>
-<!--
-</body>
-</html>
--->
 

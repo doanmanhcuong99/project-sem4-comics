@@ -1,42 +1,64 @@
-<div class="card" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div class="header">
-        <h4 class="title">Edit Book</h4>
-        <p class="category">fill out & click save</p>
-    </div>
-
-    <div class="content">
-        <form th:object="${story}" th:action="@{/story/{id}(id=${story.id})}" th:method="post">
-            <div class="form-group">
-                <input type="hidden" class="form-control" th:field="*{id}"/>
-            </div>
-            <div class="form-group">
-                <label for="title">Tên truyện </label>
-                <label th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
-                       class="alert alert-danger"></label>
-                <input type="text" class="form-control" id="title" aria-describedby="title" th:field="*{title}"
-                       playeholder="Harry Potter and the Deathly Hollows">
-            </div>
-            <div class="form-group">
-                <label for="author">Tác giả</label>
-                <input type="text" class="form-control" aria-describedby="author" th:field="*{director}"
-                       playeholder="Joanne K. Rowling"/>
-            </div>
-            <div class="form-group">
-                <label for="category">Thể loại</label>
-                <div class="form-control" th:each="category : ${allCategories}">
-                    <label><input id="category" style="margin-left: 0px;" type="checkbox"
-                                  th:field="*{categories}" th:value="${category.id}"/><span
-                            th:text="${category.name}"></span></label>
+<div class="col-xl-12 order-xl-1">
+    <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <h3 class="mb-0">Edit Story</h3>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="description">Giới thiệu truyện :</label>
-                <textarea rows="4" type="textarea" class="form-control" id="description" th:field="*{description}"
-                          playeholder="type here ..."/></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Save</button>
-            <a th:href="@{'/stories'}" class="btn btn-default">Cancel</a>
-        </form>
+        </div>
+        <div class="card-body">
+            <form th:object="${story}" th:action="@{/story/{id}(id=${story.id})}" th:method="post">
+                <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" th:field="*{id}"/>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-username">Name Story</label>
+                                <label th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                                       class="alert alert-danger"></label>
+                                <input type="text" id="input-username" class="form-control form-control-alternative"
+                                       placeholder="Username" th:field="*{title}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-address">Author</label>
+                                <input type="text" id="input-address" class="form-control form-control-alternative"
+                                       placeholder="Author" th:field="*{director}">
+                            </div>
+                        </div>
 
+                        <div class="col-lg-6">
+                            <div class="form-group" th:each="category : ${allCategories}">
+                                <label class="form-control-label" for="input-cate">Categories</label>
+                                <br>
+                                <input id="input-cate" type="checkbox"
+                                       th:field="*{categories}" th:value="${category.id}"/><span
+                                    th:text="${category.name}"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-desc">Description</label>
+                                <textarea rows="3" th:field="*{description}" id="input-desc"
+                                          class="form-control form-control-alternative"
+                                          placeholder="A few words about you ..."></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <a th:href="@{'/stories'}" class="btn btn-default">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4"/>
+            </form>
+        </div>
     </div>
 </div>

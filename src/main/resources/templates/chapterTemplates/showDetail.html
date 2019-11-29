@@ -1,33 +1,53 @@
-<div class="card" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--<div class="card" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="header">
         <h4 th:text="${chapter.title}" class="title"></h4>
     </div>
     <div class="content">
         <p th:text="${chapter.content}"></p>
-       <!-- <img th:each="image : ${chapter.getUploadFile()}"
-             th:src="|/images/${image}|"
-             class="img-fluid"
-             style="border: 1px solid red ;margin-bottom: 20px" alt="">-->
+        &lt;!&ndash; <img th:each="image : ${chapter.getUploadFile()}"
+              th:src="|/images/${image}|"
+              class="img-fluid"
+              style="border: 1px solid red ;margin-bottom: 20px" alt="">&ndash;&gt;
         <div class="container">
             <img th:each="u : ${allFile}"
                  th:src="${u.link}"
-                 class="img-fluid"alt="green-parrot-picture"/>
+                 class="img-fluid" alt="green-parrot-picture"/>
+        </div>
+    </div>
+</div>-->
+
+
+<div class="row">
+    <div class="col-xl-12 order-xl-2 mb-5 mb-xl-0">
+        <div class="card card-profile shadow">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 order-lg-2">
+                    <div class="card-profile-image">
+                    </div>
+                </div>
+            </div>
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+              <!--  <div class="d-flex justify-content-between">
+                    <a th:href="@{'/story/chapters/'+ ${story.id}}" class="btn btn-sm btn-info mr-4">Đọc ngay</a>
+                </div>-->
+            </div>
+            <div class="card-body pt-0 pt-md-4">
+                <div class="row">
+                    <div class="col">
+                        <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                            <div>
+                                <span class="heading" th:text="${chapter.title}"></span>
+                                <span class="description" th:text=" 'Chap' +' ' + ${chapter.content}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <img th:each="u : ${allFile}"
+                         th:src="${u.link}"
+                         class="img-fluid" alt="green-parrot-picture"/>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<style>
-    .container {
-        max-width: max-content;
-    }
-    img {
-        /*width: 199px;
-        height: 294px;*/
-        width: 720px;
-        height: 100%;
-        border-radius:1%;
-        -moz-border-radius:1%;
-        -webkit-border-radius:1%;
-        margin-left: 105px ;
-    }
-
-</style>

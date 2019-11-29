@@ -129,5 +129,10 @@ public class StoryController {
         return "redirect:/stories";
     }
 
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String IndexPage() {
+        return "index";
+    }
+
 
 }

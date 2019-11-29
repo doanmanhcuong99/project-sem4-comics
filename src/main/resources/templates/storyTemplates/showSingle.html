@@ -1,11 +1,36 @@
-<div class="card" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div class="header">
-        <h4 class="title">Edit Book</h4>
-        <p class="category">Details</p>
-    </div>
-    <div class="content">
-        <p th:text="${story.title}"></p>
-        <p th:text="${story.director}"></p>
-        <p th:text="${story.description}"></p>
+<div class="row">
+    <div class="col-xl-12 order-xl-2 mb-5 mb-xl-0">
+        <div class="card card-profile shadow">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 order-lg-2">
+                    <div class="card-profile-image">
+                    </div>
+                </div>
+            </div>
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                <div class="d-flex justify-content-between">
+                    <a  th:href="@{'/story/chapters/'+ ${story.id}}" class="btn btn-sm btn-info mr-4">Đọc ngay</a>
+                </div>
+            </div>
+            <div class="card-body pt-0 pt-md-4">
+                <div class="row">
+                    <div class="col">
+                        <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                            <div>
+                                <span class="heading" th:text="${story.title}"></span>
+                                <span class="description" th:text="${story.director}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <h3 th:text="${story.description}">
+                        <span class="font-weight-light"></span>
+                    </h3>
+                    <a href="#">Show more</a>
+                    <hr class="my-4"/>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
