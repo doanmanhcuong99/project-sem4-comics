@@ -35,12 +35,9 @@
 
                         </td>
                         <td class="text-center">
-                            <a th:href="@{'/account/' + ${c.id}}" class="btn btn-default btn-xs"><i
-                                    class="fa fa-pencil-square-o"></i></a>
-                            <a th:href="@{'/account/show/' + ${c.id}}" class="btn btn-primary btn-xs"><i
-                                    class="fa fa-search"></i></a>
-                            <a class="btn btn-danger btn-xs"><i
-                                    class="fa fa-trash-o"></i></a>
+                            <a th:href="@{'/account/' + ${c.id}}" class="btn btn-default btn-xs">Edit</a>
+                            <a th:href="@{'/account/show/' + ${c.id}}" class="btn btn-primary btn-xs">Show</a>
+                            <a class="btn btn-danger btn-xs">Delete</a>
                         </td>
                     </tr>
                     </tbody>

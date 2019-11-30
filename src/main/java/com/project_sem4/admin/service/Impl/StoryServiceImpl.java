@@ -83,5 +83,8 @@ public class StoryServiceImpl implements StoryService {
         return storyRepository.findById(storyId);
     }
 
-
+    @Override
+    public void delete(Long storyId) {
+        storyRepository.deleteById(storyId);
+    }
 }

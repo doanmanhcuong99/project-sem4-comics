@@ -56,14 +56,10 @@
                             </th:block>
                         </td>
                         <td th:text="${story.status}"></td>
-                        <td><a th:href="@{'/story/show/' + ${story.id}}" class="btn btn-primary btn-xs"><i
-                                class="fa fa-search"></i></a>
-                            <a th:href="@{'/story/' + ${story.id}}" class="btn btn-default btn-xs"><i
-                                    class="fa fa-pencil-square-o"></i></a>
-                            <!--   <a th:href="@{'/story/delete/' + ${story.id}}" class="btn btn-danger btn-xs"><i
-                                       class="fa fa-trash-o"></i></a>-->
-                            <a th:href="@{'/story/chapters/'+ ${story.id}}" class="btn btn-default btn-xs"><i
-                                    class="fa fa-list"></i></a></td>
+                        <td>< <a th:href="@{'/story/show/' + ${story.id}}" class="btn btn-primary btn-xs">Show</a>
+                            <a th:href="@{'/story/' + ${story.id}}" class="btn btn-primary btn-xs">Edit</a>
+                            <a th:href="@{'/story/delete/' + ${story.id}}" class="btn btn-danger btn-xs">Delete</a>
+                            <a th:href="@{'/story/chapters/'+ ${story.id}}" class="btn btn-default btn-xs">List Chapter</a>
                     </tr>
                     </tbody>
                 </table>

@@ -134,5 +134,10 @@ public class StoryController {
         return "index";
     }
 
+    @RequestMapping(value = "/story/delete/{id}", method = RequestMethod.GET)
+    public String deleteStory(@PathVariable("id") long storyId) {
+        storyService.delete(storyId);
+        return "redirect:/stories";
+    }
 
 }

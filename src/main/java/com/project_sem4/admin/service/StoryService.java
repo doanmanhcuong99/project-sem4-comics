@@ -23,5 +23,5 @@ public interface StoryService {
 
     Optional<Story> findForId(Long storyId);
     /*    Set<Story> getTasksByStatus(Status status);*/
-
+    void delete (Long storyId);
 }

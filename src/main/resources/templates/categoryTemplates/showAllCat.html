@@ -52,12 +52,9 @@
 
                         </td>
                         <td class="text-center">
-                            <a th:href="@{'/category/' + ${category.id}}" class="btn btn-default btn-xs"><i
-                                    class="fa fa-pencil-square-o"></i></a>
-                            <a th:href="@{'/category/stories/' + ${category.id}}" class="btn btn-default btn-xs"><i
-                                    class="fa fa-list"></i></a>
-                            <a th:href="@{'/category/delete/' + ${category.id}}" class="btn btn-default btn-xs"><i
-                                    class="fa fa-trash-o"></i></a>
+                            <a th:href="@{'/category/' + ${category.id}}" class="btn btn-default btn-xs">Edit</a>
+                            <a th:href="@{'/category/stories/' + ${category.id}}" class="btn btn-default btn-xs">Story By Cate</a>
+                            <a th:href="@{'/category/delete/' + ${category.id}}" class="btn btn-default btn-xs">Delete</a>
                         </td>
                     </tr>
                     </tbody>

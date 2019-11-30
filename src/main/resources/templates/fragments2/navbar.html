@@ -5,7 +5,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand pt-0" href="./index.html">
+        <a class="navbar-brand pt-0" th:href="@{/index}">
             <img src="/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
         </a>
         <!-- User -->
@@ -36,18 +36,6 @@
                     <a href="./examples/profile.html" class="dropdown-item">
                         <i class="ni ni-single-02"></i>
                         <span>My profile</span>
-                    </a>
-                    <a href="./examples/profile.html" class="dropdown-item">
-                        <i class="ni ni-settings-gear-65"></i>
-                        <span>Settings</span>
-                    </a>
-                    <a href="./examples/profile.html" class="dropdown-item">
-                        <i class="ni ni-calendar-grid-58"></i>
-                        <span>Activity</span>
-                    </a>
-                    <a href="./examples/profile.html" class="dropdown-item">
-                        <i class="ni ni-support-16"></i>
-                        <span>Support</span>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="#!" class="dropdown-item">
@@ -89,12 +77,12 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item  class=" active" ">
-                <a class=" nav-link active " href=" ./index.html"> <i class="ni ni-tv-2 text-primary"></i> Dashboard
+                <a class=" nav-link active " th:href="@{/index}"> <i class="ni ni-tv-2 text-primary"></i> Dashboard
                 </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link "  th:href="@{/stories}">
-                        <i class="ni ni-planet text-blue"></i> Comic List
+                        <i class="ni ni-planet text-blue"></i> Story List
                     </a>
                 </li>
                 <li class="nav-item">
